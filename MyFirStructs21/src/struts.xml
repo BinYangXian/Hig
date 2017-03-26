@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+	<constant name="struts.enable.DynamicMethodInvocation" value="true"></constant>
+	
+    <package name="default" namespace="/" extends="struts-default">
+        <action name="index" class="com.cdsxt.action.Index"></action>
+        <action name="returnedAction" class="com.cdsxt.action.ReturnedAction">
+       		<result name="chain" type="chain"> <!-- 接收ReturnedAction.xxx方法中的返回值，据此选择对应的操作 -->
+        		<param name="actionName">index</param>
+				<param name="namespace">/</param>
+				<param name="method">execute</param>
+			</result>
+				<!-- 
+					actionName  目标action
+					namespace  目标action所在包
+					method  要执行的目标方法
+				 -->
+			
+			<result name="dispatcher">/test.jsp</result>
+			<result name="redirect" type="redirect">/test.jsp</result>
+			
+			<result name="redirectAction" type="redirectAction">
+				<param name="actionName">index</param>
+				<param name="namespace">/</param>
+				<param name="method">execute</param>
+			</result>
+			<!-- 
+				type 
+					chain,  转发到action
+					dispatcher,  转发到页面
+					redirect, 重定向到页面
+					redirecAction,  重定向到action
+					stream,  返回一个流  通常用于文件下载 和  ajax
+					[json]  处理json数据
+			
+			 -->
+        </action>
+    </package>
+
+</struts>

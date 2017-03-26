@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	
+	<!-- 开启方法动态调用   actionName!methodName -->
+	<constant name="struts.enable.DynamicMethodInvocation" value="true"></constant>
+	<constant name="struts.objectFactory" value="spring"></constant>
+	<package name="crm" namespace="/" extends="json-default">
+		<interceptors>
+			<interceptor name="powerInterceptor" class="com.cdsxt.web.interceptor.PowerInterceptor"></interceptor>
+			<interceptor-stack name="aduf">
+				<interceptor-ref name="powerInterceptor"></interceptor-ref>
+				<interceptor-ref name="defaultStack"></interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+		<default-interceptor-ref name="aduf"></default-interceptor-ref>
+		<global-results>
+			<result name="login">/login.jsp</result>
+			<result name="error">/error.jsp</result>
+			<result name="input">/error.jsp</result>
+			<result name="nopower">/nopower.jsp</result>
+		</global-results>
+	</package>
+	<package name="power" namespace="/power" extends="crm">
+	<!-- 登陆用action -->
+		<action name="loginAction_*" class="loginAction" method="{1}">
+			<result name="success">/power/frame.jsp</result>
+			<result name="input">/login.jsp</result>
+			<result name="findUserMenu" type="json">
+				<param name="root">userMenuVo</param>
+			</result>
+			<result name="exit">/login.jsp</result>
+		</action>
+		<!-- 用户action -->
+		<action name="userAction_*" class="userAction" method="{1}">
+			<result name="findAll">/power/user/findAllUser.jsp</result>
+			<result name="updatePwd">/login.jsp</result>
+			<result name="getRoleVo" type="json">
+				<param name="root">roleVos</param>
+			</result>
+			<result name="addUser" type="redirectAction">userAction_findAll.action</result>
+			<result name="updateUser" type="redirectAction">userAction_findAll.action?curPage=${curPage}</result>
+			<result name="deleteUser" type="redirectAction">userAction_findAll.action?curPage=${curPage}</result>
+		</action>
+		<!-- 角色action -->
+		<action name="roleAction_*" class="roleAction" method="{1}">
+			<result name="findAll">/power/role/findAllRole.jsp</result>
+			<result name="updateMenu" type="redirectAction">roleAction!findAll.action</result>
+			<result name="updateName" type="json">
+				<param name="root">errorMsg</param>
+			</result>
+			<result name="addRole" type="redirectAction">roleAction!findAll.action</result>
+			<result name="deleteRole" type="json">
+				<param name="root">errorMsg</param>
+			</result>
+			<result name="findRoleModule">/power/role/findRoleModule.jsp</result>
+			<result name="updateModule" type="json">
+				<param name="root">errorMsg</param>
+			</result>
+			<result name="findAllToPage">/power/role/findAllRole.jsp</result>
+			
+		</action>
+		
+		<!-- 菜单action /power/menu/findAllMenu.jsp -->
+		<action name="menuAction_*" class="menuAction" method="{1}">
+			<result name="findAll" type="json">
+				<param name="root">menuVos</param>
+			</result>
+		</action>
+		<action name="staffAction_*" method="{1}" class="staffAction" >
+			<result name="findAll">/power/staff/findAllStaff.jsp</result>
+		</action>
+	</package>
+	
+	<!-- 销售模块 -->
+	<include file="struts-sell.xml"></include>
+	<!-- 客户模块 -->
+	<include file="struts-customer.xml"></include>
+</struts>

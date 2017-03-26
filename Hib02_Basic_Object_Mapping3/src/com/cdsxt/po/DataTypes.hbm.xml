@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping
+        SYSTEM
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.cdsxt.po">
+
+	<class name="DataTypes" table="test_data_type">
+ 		<id name="id">
+ 			<generator class="assigned"></generator>
+ 		</id>
+ 		
+ 		<property name="testBlob" column="test_blob"></property>
+ 		<!-- <property name="testBool" column="test_bool"></property> -->
+ 		<property name="testByte" column="test_byte"></property>
+ 		<property name="testChar" column="test_char"></property>
+ 		<property name="testClob" column="test_clob"></property>
+ 		<property name="testDouble" column="test_double"></property>
+ 		<property name="testFloat" column="test_float"></property>
+ 		<property name="testInt" column="test_int"></property>
+ 		<property name="testInteger" column="test_integer"></property>
+ 		<property name="testLong" column="test_long"></property>
+ 		<property name="testShort" column="test_short"></property>
+ 		<property name="testSqlDate" column="test_sql_date"></property>
+ 		<property name="testUtilDate" column="test_util_date"></property>
+ 		<property name="testString" column="test_string"></property>
+ 		
+	 </class>
+</hibernate-mapping>

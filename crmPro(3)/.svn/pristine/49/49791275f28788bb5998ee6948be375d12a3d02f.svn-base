@@ -1,0 +1,47 @@
+package com.cdsxt.po;
+
+import java.util.Set;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+@Entity
+@Table
+public class Role {
+	@Id
+	@SequenceGenerator(sequenceName="seq_Role",name="name")
+	@GeneratedValue(generator="name")
+	private Integer roleid;
+	private String rolename;
+	@ManyToMany
+	private Set<Users>users;
+	
+	@OneToMany(mappedBy="module")
+	Set<Role_Module> role_Modules;
+	public Integer getRoleid() {
+		return roleid;
+	}
+	public void setRoleid(Integer roleid) {
+		this.roleid = roleid;
+	}
+	public String getRolename() {
+		return rolename;
+	}
+	public void setRolename(String rolename) {
+		this.rolename = rolename;
+	}
+	public Set<Users> getUsers() {
+		return users;
+	}
+	public void setUsers(Set<Users> users) {
+		this.users = users;
+	}
+	
+	
+	
+
+}

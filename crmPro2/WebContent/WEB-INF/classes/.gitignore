@@ -1,0 +1,7 @@
+/applicationContext-common.xml
+/applicationContext.xml
+/com/
+/db.properties
+/log4j.properties
+/struts-power.xml
+/struts.xml

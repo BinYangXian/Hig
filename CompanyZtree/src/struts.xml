@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+
+	
+	<constant name="struts.enable.DynamicMethodInvocation" value="true"></constant>
+	
+    <package name="default" namespace="/" extends="json-default">
+    	<action name="companyAction" class="companyAction" method="findAll">
+    		<result name="findAll">/views/company/index.jsp</result>
+    		<result name="findAllToJson" type="json">
+    			<param name="root">vos</param>
+    		</result>
+    	</action>
+    </package>
+</struts>

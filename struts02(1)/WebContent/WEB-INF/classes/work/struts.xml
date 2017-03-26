@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+
+	
+	<constant name="struts.enable.DynamicMethodInvocation" value="true"></constant>
+	
+	<constant name="struts.action.extension" value="do"></constant>
+	
+    <package name="base" namespace="/" extends="json-default">
+    	
+    	<interceptors>
+    		<interceptor name="demo" class="com.cdsxt.interceptor.DemoInterceptor" />
+    		<interceptor-stack name="base">
+    			<interceptor-ref name="defaultStack" />
+    			<interceptor-ref name="demo" />
+    		</interceptor-stack>
+    	</interceptors>
+    	
+    	<default-interceptor-ref name="base" />
+    	
+    	<global-results>
+    		<!-- 全局错误处理 -->
+    		<result name="error">/common/error.jsp</result>
+    		<!-- 没有权限的提示页面 -->
+    		<result name="nopower">/common/nopower.jsp</result>
+    		<result name="main" type="redirect">/main/main.jsp</result>
+    		<result name="login">/login.jsp</result>
+    		<result name="logout" type="redirect">/login.jsp</result>
+    	</global-results>
+    </package>
+    
+    
+    <include file="struts-system.xml"></include>
+    <include file="struts-common.xml"></include>
+    
+</struts>

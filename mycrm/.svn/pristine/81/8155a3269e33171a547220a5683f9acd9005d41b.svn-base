@@ -1,0 +1,73 @@
+package com.cdsxt.sell.po;
+
+import java.util.Date;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+import com.cdsxt.customer.po.Customer;
+import com.cdsxt.web.po.User;
+
+@Entity
+@Table(name="crm_sell")
+public class SellOpp { //销售机会
+	
+	@Id
+	private Integer id; 
+	
+	private Date addDate; //创建时间
+	
+	private String remark; //备注
+	
+	@OneToOne
+	@JoinColumn(name="customer_id")
+	private Customer customer;
+
+	@OneToOne
+	@JoinColumn(name="user_id")
+	private User user;
+	
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public Date getAddDate() {
+		return addDate;
+	}
+
+	public void setAddDate(Date addDate) {
+		this.addDate = addDate;
+	}
+
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
+	
+}

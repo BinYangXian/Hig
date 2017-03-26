@@ -1,0 +1,44 @@
+<!DOCTYPE hibernate-configuration PUBLIC
+	"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+	<session-factory>
+	
+		<property name="hibernate.dialect">org.hibernate.dialect.OracleDialect</property>
+		<property name="hibernate.connection.driver_class">oracle.jdbc.driver.OracleDriver</property>
+		<property name="hibernate.connection.username">scott</property>
+		<property name="hibernate.connection.password">123456</property>
+		<property name="hibernate.connection.url">jdbc:oracle:thin:@localhost:1521:orcl</property>
+		<!-- 
+		 	全局配置
+		-->
+		<property name="hibernate.show_sql">true</property>
+		<property name="hibernate.format_sql">true</property>
+		
+		<!-- <property name="hibernate.hbm2ddl.auto">update</property> -->
+		<!-- 
+		  	映射文件配置
+		-->
+		
+		<!-- 
+			缓存：
+				二级缓存：（sessionFactory）的缓存插件
+				查询缓存：专门用于查询的（list，iterator）  需要依赖二级缓存
+		
+		
+			1、导入包
+			2、创建缓存的配置文件
+			3、配置到Hibernate中
+			4、使用
+		 -->
+		 <!-- 开启二级缓存 -->
+		 <property name="hibernate.cache.use_second_level_cache">true</property>
+		 <property name="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory</property>
+		 <!-- 开启查询缓存 -->
+		 <property name="hibernate.cache.use_query_cache">true</property>
+		 
+		<mapping class="com.cdsxt.po.Emp"/>
+		<mapping class="com.cdsxt.po.Dept"/>
+		
+	</session-factory>
+</hibernate-configuration>

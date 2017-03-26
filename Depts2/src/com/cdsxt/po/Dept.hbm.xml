@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping
+        SYSTEM
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.cdsxt.po">
+
+
+	 <class name="Dept" table="dept">
+	 
+	 	<id name="deptno" column="deptno">
+	 		<generator class="assigned" />
+	 	</id>
+	 	<property name="dname"></property>
+	 	<property name="loc"></property>
+	 	
+	 	<set name="emps" inverse="true">
+	 		<key column="deptno"></key>
+	 		<one-to-many class="Emp"/>
+	 	</set>
+	 </class>
+</hibernate-mapping>

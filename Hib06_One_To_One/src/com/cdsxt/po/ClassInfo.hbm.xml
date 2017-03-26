@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping
+        SYSTEM
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.cdsxt.po">
+
+
+	 <class name="ClassInfo" table="test_class_info">
+	 	<id name="cid">
+	 		<generator class="sequence">
+	 			<param name="sequence">seq_test_class_info</param>
+	 		</generator>
+	 	</id>
+	 	
+	 	<property name="cname"></property>
+	 	
+	 	<one-to-one name="student" class="Student"></one-to-one>
+	 	
+	 </class>
+</hibernate-mapping>

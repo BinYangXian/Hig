@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+
+	
+	<constant name="struts.enable.DynamicMethodInvocation" value="true"></constant>
+	<constant name="struts.objectFactory" value="spring"></constant>
+	
+    <package name="crm" namespace="/" extends="json-default">
+	    <action name="courseAction" class="courseAction" method="findAll">
+    		<result name="findAll">/views/course/index.jsp</result>
+    		<result name="choose">/views/student/choose.jsp</result>
+    		<result name="save-success" type="redirectAction">courseAction</result>
+    	</action>
+	    <action name="studentAction" class="studentAction" method="findAll"> 
+	    		<result name="findAll">/views/student/index.jsp</result>
+	    		<result name="choose" type="redirectAction">studentAction</result>
+	    		<result name="save-success" type="redirectAction">studentAction</result>
+	    		<result name="findAllCourse" type="json">
+	    			<param name="root">ids</param>
+	    		</result>
+	    </action>
+    </package>
+    
+</struts>

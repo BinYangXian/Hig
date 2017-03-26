@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+	<constant name="struts.enable.DynamicMethodInvocation" value="true"></constant>
+	
+    <package name="default" namespace="/" extends="struts-default">
+        <action name="myUsersAction" class="com.cdsxt.action.MyUsersAction">
+       		<result name="simpleDispatcher">views/users/index.jsp</result><!-- 最简单的转发 -->
+				<!-- 
+					actionName  目标action
+					namespace  目标action所在包
+					method  要执行的目标方法
+				 -->
+			<!-- 
+				type 
+					chain,  转发到action
+					dispatcher,  转发到页面
+					redirect, 重定向到页面
+					redirecAction,  重定向到action
+					stream,  返回一个流  通常用于文件下载 和  ajax
+					[json]  处理json数据
+			
+			 -->
+        </action>
+    </package>
+
+</struts>

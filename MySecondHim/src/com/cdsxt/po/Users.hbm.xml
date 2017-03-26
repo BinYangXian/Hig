@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping
+        SYSTEM
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping package="com.cdsxt.po">
+ 		<class name="Users" table="test_users">
+	 	<id name="id" column="u_id">
+	 		<!-- 
+	 			主键生成器 
+	 			assigned  手动指定
+	 		-->
+	 		<generator class="assigned"></generator>
+	 	</id>
+	 	<property name="age"></property>
+	 	<property name="name"></property>
+	 </class>
+</hibernate-mapping>

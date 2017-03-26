@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+
+	<!-- 
+		Struts 整合点
+		
+		导入插件  struts2-spring-plugin-2.3.20.jar
+		
+		设置 struts的 工厂类  <constant name="struts.objectFactory" value="spring"></constant>
+		
+		设置  action为多例
+	 -->
+	
+	<constant name="struts.enable.DynamicMethodInvocation" value="true"></constant>
+	<constant name="struts.objectFactory" value="spring"></constant>
+	
+    <package name="default" namespace="/" extends="struts-default">
+    	<action name="usersAction" class="usersAction"></action>
+    	<action name="empAction" class="empAction" method="findAll">
+    		<result name="findAll">/views/emp/index.jsp</result>
+    		<result name="update">/views/emp/update.jsp</result>
+    		<result name="update-success" type="redirectAction">empAction</result>
+    	</action>
+    </package>
+</struts>

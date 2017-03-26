@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping
+        SYSTEM
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.cdsxt.po">
+
+    <class name="Users" table="test_users">
+    	<id name="id" column="u_id">
+    		<!--  <generator class="sequence">
+	 			<param name="sequence">seq_test_users</param>
+	 		</generator>  -->
+	 		<generator class="uuid"></generator>
+    	</id>
+    	
+    	<property name="name" />
+    	<property name="age" />
+
+    </class>
+
+</hibernate-mapping>

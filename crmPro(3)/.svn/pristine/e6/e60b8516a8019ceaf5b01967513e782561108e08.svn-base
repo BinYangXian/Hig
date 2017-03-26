@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+
+	
+	<constant name="struts.enable.DynamicMethodInvocation" value="true"></constant>
+	<constant name="struts.objectFactory" value="spring"></constant>
+	
+    <package name="crm" namespace="/" extends="json-default">
+    	<!-- 配置全局 -->
+    	
+    	<!-- 配置拦截器  -->
+    	<interceptors>
+    		<interceptor name="powerInterceptor" class="com.cdsxt.interceptor.PowerInterceptor" />
+    		<interceptor-stack name="security">
+    			<interceptor-ref name="powerInterceptor" />
+    			<interceptor-ref name="defaultStack" />
+    		</interceptor-stack>
+    	</interceptors>
+    	
+    	<default-interceptor-ref name="security" />
+    	
+    	<!-- 全局的结果处理  -->
+    	
+    	<global-results>
+    		<!-- 登录页面 -->
+    		<result name="login">/login.jsp</result>
+    		<!-- 安全退出以后 回到登录界面  -->
+    		<result name="logout" type="redirect">/login.jsp</result>
+    		<!-- 登录成功后的主界面 -->
+    		<result name="main" type="redirect">/views/main/main.jsp</result>
+    		<!-- 错误界面 -->
+    		<result name="error">/views/common/error.jsp</result>
+    		<!-- 没有权限的提示界面 -->
+    		<result name="nopower">/views/common/nopower.jsp</result>
+    	</global-results>
+    </package>
+    
+    <include file="struts-power.xml" />
+    <include file="struts-customer.xml" />
+    
+</struts>

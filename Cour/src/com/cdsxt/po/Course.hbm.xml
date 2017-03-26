@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping
+        SYSTEM
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.cdsxt.po">
+
+
+	 <class name="Course" table="test_course">
+	 
+	 	<id name="cid" >
+	 		<generator class="sequence">
+	 			<param name="sequence">seq_test_course</param>
+	 		</generator>
+	 	</id>
+	 	<property name="cname"></property>
+	 	
+	 	<set name="students" inverse="true" table="test_student_course">
+	 		<key column="cid"></key>
+	 		<many-to-many class="Student" column="stu_id"></many-to-many>
+	 	</set>
+	 </class>
+</hibernate-mapping>

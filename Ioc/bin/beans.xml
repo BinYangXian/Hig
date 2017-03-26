@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans>
+	<bean id="usersAction" class="com.cdsxt.action.UsersAction">
+		<property name="usersService" ref="usersService"></property>
+	</bean>
+	<bean id="usersService" class="com.cdsxt.service.impl.UsersServiceImpl">
+		<property name="usersDao" ref="usersDao"></property>
+	</bean>
+	<bean id="usersDao" class="com.cdsxt.dao.impl.UsersDaoImpl"></bean>
+</beans>

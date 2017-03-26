@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/util
+           http://www.springframework.org/schema/util/spring-util.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context.xsd">
+
+
+	       
+	<bean id="usersAction" class="com.cdsxt.action.UsersAction">
+		<property name="usersService" ref="usersService"></property>
+	</bean>
+	<bean id="usersService" class="com.cdsxt.service.impl.UsersServiceImpl">
+		<property name="usersDao" ref="usersDao"></property>
+	</bean>
+	<bean id="usersDao" class="com.cdsxt.dao.impl.UsersDaoImpl"></bean>
+	
+	<bean id="log" class="com.cdsxt.log.Log"></bean>
+	
+	<!-- 
+		AOP 配置步骤
+		
+			导入jar包  
+				aopalliance-1.0.jar
+				aspectjrt-1.8.9.jar
+				aspectjweaver-1.8.9.jar
+				spring-aop-3.2.8.RELEASE.jar
+				spring-aspects-3.2.8.RELEASE.jar
+				
+			导入命名空间 AOP
+			
+			配置：
+				aop:config 表示aop配置
+					aop:aspect  表示切面      需要引用代码增强片段
+						aop:pointcut 表示切入点
+							expression  表达式
+								execution(modifiers-pattern? ret-type-pattern declaring-type-pattern? name-pattern(param-pattern)throws-pattern?)
+								execution(方法修饰符  返回值类型  包.类.方法(参数)异常)
+								execution(public * com.cdsxt.service..*.*(..))
+							id 名称
+							
+						aop:[after|before....]  通知类型
+							method   表示在切面上引用的类里面的方法名称
+							pointcut|pointcut-ref  表示的是 表达式或是表达式引用
+	
+	 -->
+	
+	<aop:config>
+		<aop:aspect ref="log"><!-- 引用id为log的bean对象 -->
+			<aop:pointcut expression="execution(public * com.cdsxt.service.impl.*.*(..))" id="logPointCut"/>
+			<aop:after method="log" pointcut-ref="logPointCut"/><!-- 这里可以有多个 -->
+			<aop:before method="log" pointcut-ref="logPointCut"/>
+		</aop:aspect>
+	</aop:config>
+
+</beans>

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/util
+           http://www.springframework.org/schema/util/spring-util.xsd
+           http://www.springframework.org/schema/tx
+           http://www.springframework.org/schema/tx/spring-tx.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context.xsd">
+           
+           
+    <!-- 
+    	Hibernate 整合需要的东西
+    	
+    		导入Hibernate 的jar包（4.2.7）
+    		导入spring-orm-3.2.8.RELEASE.jar
+    		
+    		需要用事务管理器
+    		还要导入aop  和  tx
+    
+    
+     -->
+
+	<context:component-scan base-package="com.cdsxt" />
+
+	<util:properties id="jdbc"><!-- 记得导入命名空间 -->
+		<prop key="jdbc_url">jdbc:oracle:thin:@localhost:1521:orcl</prop>
+		<prop key="jdbc_user">scott</prop>
+		<prop key="jdbc_password">123456</prop>
+	</util:properties>
+	<!-- spring帮我们封装的jdbc就可以理解为，中级学的DaseDao；需要事务管理器-相当于aop，在我们真正要执行的方法之前开启事务
+	，在执行之后帮我提交之；事务管理器依赖aop而建立起来的；tx包与aop的jar包一般应同在；需要spring的plugin插件；log4j.properties
+	输出himbernate的日志信息 -->
+	<!-- druid-数据库连接池，号称为监控而生的(卢说过需要搭配事务管理器才能使用？) -->
+	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
+		init-method="init" destroy-method="close">
+		<!-- 基本属性 url、user、password -->
+		<property name="url" value="#{jdbc.jdbc_url}" />
+		<property name="username" value="#{jdbc.jdbc_user}" />
+		<property name="password" value="#{jdbc.jdbc_password}" />
+
+		<!-- 配置初始化大小、最小、最大 -->
+		<property name="initialSize" value="1" />
+		<property name="minIdle" value="1" />
+		<property name="maxActive" value="20" />
+
+		<!-- 配置获取连接等待超时的时间 -->
+		<property name="maxWait" value="60000" />
+
+		<!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+		<property name="timeBetweenEvictionRunsMillis" value="60000" />
+
+		<!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+		<property name="minEvictableIdleTimeMillis" value="300000" />
+
+		<property name="validationQuery" value="SELECT 'x' FROM DUAL" /><!-- mysql中是value="SELECT 'x'" -->
+		<property name="testWhileIdle" value="true" />
+		<property name="testOnBorrow" value="false" />
+		<property name="testOnReturn" value="false" />
+
+		<!-- 打开PSCache，并且指定每个连接上PSCache的大小 -->
+		<property name="poolPreparedStatements" value="true" /><!-- oracle中设为true(当分库分表较多时候应改之为false)，mysql中为false -->
+		<property name="maxPoolPreparedStatementPerConnectionSize" value="20" />
+
+		<!-- 配置监控统计拦截的filters -->
+		<property name="filters" value="stat" />
+	</bean>
+
+	<!-- 配置Hibernate -->
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+	
+		<property name="dataSource" ref="dataSource"></property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.format_sql">true</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+			</props>
+		</property>
+		<property name="packagesToScan" value="com.cdsxt.po"></property><!-- com.cdsxt.po不能写在property之间 -->
+	</bean>
+	<bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+<!-- =======================================分割线=======================================-->
+<!-- 1、声明式的事务管理器，需要采用aop中的横截面切入代码段的方法，引入事务管理器（aop的是基于代理模式） -->
+<!-- 	<tx:advice transaction-manager="transactionManager" id="txAdvice">transaction-manager默认="transactionManager"
+	，如果上述的id等于此，则这里可以省略之；这里是事务的第一种传递方式
+	方法申明式事务-确实比较麻烦：
+		<tx:attributes>
+			<tx:method name="find*" read-only="true"/>find开头的方法，应仅有只读权限
+			<tx:method name="get*" read-only="true"/>
+			<tx:method name="query*" read-only="true"/>
+			<tx:method name="fetch*" read-only="true"/>
+			<tx:method name="save*" propagation="REQUIRED"/>需要事务的方法需要：propagation="REQUIRED"
+			<tx:method name="add*" propagation="REQUIRED"/>
+			<tx:method name="delete*" propagation="REQUIRED"/>
+			<tx:method name="remove*" propagation="REQUIRED"/>
+			<tx:method name="update*" propagation="REQUIRED"/>
+			<tx:method name="merge*" propagation="REQUIRED"/>
+			<tx:method name="*" read-only="true"/>其余所有方法的权限为只读
+		</tx:attributes>
+	</tx:advice>
+	
+	<aop:config>
+		注意事务一般加载业务层-service(com.cdsxt.service)层，而非dao层：因为一个事务的提交是否成功，取决于多个数据的增删改同时成功
+		，如果其中任何一个失败都不会成功
+		<aop:pointcut expression="execution(public * com.cdsxt.service.impl.*.*(..))" id="txPointcut"/>
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="txPointcut"/>这里的aop:advisor只能有一个
+		，因为这有advice-ref了？
+	</aop:config> -->
+<!-- =======================================分割线=======================================-->
+<!-- 2、编程式事务：开启后使用注解可替代上述，在工作中居多(这里还需要声明注解要针对哪些事务管理器)-->
+	<tx:annotation-driven transaction-manager="transactionManager"/>
+<!-- 3、编程式事务之事务模板:这样以后在当前的项目的UsersDaoImpl中，就都持有这个事务模板了，详见UsersDaoImpl-->
+<!-- 总结：一般来说，我们都是以xml方式，把我们的事务管理器给配置好，开启编程式事务，通过注解方式，标注有事务。 -->
+	<bean id="transactionTemplate" class="org.springframework.transaction.support.TransactionTemplate">
+		<property name="transactionTemplate" ref="transactionManager"></property>
+	</bean>
+</beans>

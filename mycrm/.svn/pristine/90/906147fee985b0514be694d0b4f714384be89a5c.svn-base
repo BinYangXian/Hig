@@ -1,0 +1,50 @@
+package com.cdsxt.customer.po;
+
+import java.util.Set;
+
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import com.cdsxt.sell.po.Indent;
+
+@Entity
+@Table(name="crm_customer")
+public class Customer {
+	private Integer id; 
+	private String name;    //客户姓名或公司名
+	private Integer stateCode;	//状态码(必要字段)标记客户当前状态，1，有意向表示需要维护，0，已购买本公司产品，-1当前购买其他公司产品，暂时不用维护，
+	@OneToMany(mappedBy="customer")
+	private Set<Indent> indents; //该顾客的订单信息
+	
+	
+	//-----以上为销售模块必须字段，下面字段由客户管理模块计入修改--------------
+	private String phone;	//联系电话
+	private Integer source;	//来源，暂定两种：1：线上；0：线下
+	private Integer grade;	//客户等级---可以考虑删除，利用消费金额来判断，或者，综合消费金额和客服实力来定
+	private String remark;	//备注
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public Integer getStateCode() {
+		return stateCode;
+	}
+	public void setStateCode(Integer stateCode) {
+		this.stateCode = stateCode;
+	}
+	public Set<Indent> getIndents() {
+		return indents;
+	}
+	public void setIndents(Set<Indent> indents) {
+		this.indents = indents;
+	}
+}

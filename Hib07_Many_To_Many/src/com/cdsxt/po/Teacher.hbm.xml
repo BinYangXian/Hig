@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping
+        SYSTEM
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.cdsxt.po">
+
+	 <class name="Teacher" table="test_teacher">
+	 	<id name="tid" >
+	 		<generator class="sequence">
+	 			<param name="sequence">seq_test_teacher</param>
+	 		</generator>
+	 	</id>
+	 	<property name="tname"></property>
+	 	
+	 	<set name="students" table="test_teacher_students" inverse="true"><!-- table的值为此处使用的表名，可随意起名
+	 		，同时当前这个set要维护的表是Teacher对应的表，在Student的相关地方也需要配置相同；再放弃关系维护，
+	 		就能去除多余的一张维护关系表-->
+	 		<key column="tid"></key>
+	 		<many-to-many class="Student" column="stu_id"></many-to-many><!-- column="stu_id"指在当前Teacher类所映射
+	 		表中的主键或唯一键，同时作为在中间表生成的字段；（其默认关联到Student对应的key的column值？）-->
+	 	</set>
+	 </class>
+</hibernate-mapping>

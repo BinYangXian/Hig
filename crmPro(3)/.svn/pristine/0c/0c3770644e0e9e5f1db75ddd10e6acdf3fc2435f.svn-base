@@ -1,0 +1,5 @@
+package com.cdsxt.po;
+
+public class Menu {
+	private Integer menuid;
+}

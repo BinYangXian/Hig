@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping
+        SYSTEM
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping package="com.cdsxt.po">
+ 		<class name="Emp" table="TEST_EMP_BAK">
+	 	<id name="empno">
+	 		<generator class="sequence">
+	 			<param name="sequence">seq_emp_bak</param>
+	 		</generator>
+	 	</id>
+	 	<property name="comm"></property>
+	 	<property name="deptno"></property>
+	 	<property name="mgr"></property>
+	 	<property name="ename"></property>
+	 	<property name="job"></property>
+	 	<property name="sal"></property>
+	 	<property name="hiredate"></property>
+	 </class>
+</hibernate-mapping>

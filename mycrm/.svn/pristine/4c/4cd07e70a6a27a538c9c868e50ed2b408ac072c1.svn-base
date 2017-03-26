@@ -1,0 +1,59 @@
+package com.cdsxt.product.po;
+
+import java.util.Set;
+
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import com.cdsxt.sell.po.Indent;
+import com.cdsxt.sell.po.IndentChild;
+
+@Entity
+@Table(name="crm_product")
+public class Product { //产品
+
+	private Integer id;
+	
+	private String modelCode; //型号
+	
+	private String name;  //名称
+	
+	private Integer price; //单价
+	
+	@OneToMany(mappedBy="product")
+	private Set<IndentChild> indentChilds;
+	
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Integer getPrice() {
+		return price;
+	}
+
+	public void setPrice(Integer price) {
+		this.price = price;
+	}
+
+
+	public String getModelCode() {
+		return modelCode;
+	}
+
+	public void setModelCode(String modelCode) {
+		this.modelCode = modelCode;
+	}
+}

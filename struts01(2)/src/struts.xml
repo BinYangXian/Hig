@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+
+	<!-- 
+		开启方法的动态调用 
+		
+		actionName!methodName
+		
+		struts默认的后缀名  是 action  可以省略
+		
+		如果是自己指定以后 则一定要带上后缀
+		
+		
+		constant  复写程序的默认设置    
+			name   复写的变量名
+			value   值
+			
+			去org.apache.struts2中找default.properties文件
+	-->
+	<constant name="struts.enable.DynamicMethodInvocation" value="true"></constant>
+	<constant name="struts.action.extension" value="do"></constant>
+	
+	<!-- 
+	
+		package  便于管理  避免重名  struts中的任何package都需要直接或间接的继承自struts-default
+			name  包名  在当前项目中 要唯一
+			namespace  表示命名空间  
+			extends  继承的包
+			
+			> action
+				name  要访问的action路径
+				class  要用于处理请求的action类  全局限定名
+				method 默认的执行方法 [execute] 如果没有更改此默认方法的配置，在aciton中需要有此方法，否则会报错
+				
+				> result  处理的结果
+					name  值是返回的可能结果
+					type  后续处理的类型[chain,dispatcher,redirect,redirecAction,stream,[json]]
+		
+	 -->
+    <package name="default" namespace="/" extends="struts-default">
+		<action name="index" class="com.cdsxt.action.IndexAction" method="test">
+			<result name="test" type=""></result>
+		</action>
+		<action name="paramAction" class="com.cdsxt.action.ParamAction"></action>
+		<action name="returnedAction" class="com.cdsxt.action.ReturnedAction">
+			<result name="chain" type="chain">
+				<param name="actionName">index</param>
+				<param name="namespace">/</param>
+				<param name="method">execute</param>
+				
+				<!-- 
+					actionName  目标action
+					namespace  目标action所在包
+					method  要执行的目标方法
+				 -->
+			</result>
+			
+			<result name="dispatcher">/test.jsp</result>
+			<result name="redirect" type="redirect">/test.jsp</result>
+			
+			<result name="redirectAction" type="redirectAction">
+				<param name="actionName">index</param>
+				<param name="namespace">/</param>
+				<param name="method">execute</param>
+			</result>
+			<!-- 
+				type 
+					chain,  转发到action
+					dispatcher,  转发到页面
+					redirect, 重定向到页面
+					redirecAction,  重定向到action
+					stream,  返回一个流  通常用于文件下载 和  ajax
+					[json]  处理json数据
+			
+			 -->
+		</action>
+		
+		<action name="scopeAction" class="com.cdsxt.action.ScopeAction">
+			<!-- <result name="test1" type="chain">
+				<param name="actionName">scopeAction</param>
+				<param name="namespace">/</param>
+				<param name="method">test2</param>
+			</result> -->
+			<result name="test1" type="redirectAction">
+				<param name="actionName">scopeAction</param>
+				<param name="namespace">/</param>
+				<param name="method">test2</param>
+			</result>
+		</action>
+		
+		<action name="servletObjectAction" class="com.cdsxt.action.ServletObjectAction">
+			<result name="test">/test.jsp</result>
+		</action>
+		
+		<action name="uploadAction" class="com.cdsxt.action.UploadAction">
+			<result name="upload" type="redirect">/upload.jsp</result>
+		</action>
+		<action name="downloadAction" class="com.cdsxt.action.DownloadAction">
+			<result name="down" type="stream">
+				<param name="inputName">input</param>
+				<param name="contentDisposition">attachment;filename=${filename}</param>
+			</result>
+		</action>
+    </package>
+</struts>

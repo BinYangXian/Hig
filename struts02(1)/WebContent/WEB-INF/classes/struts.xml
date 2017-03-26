@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+
+	
+	<constant name="struts.enable.DynamicMethodInvocation" value="true"></constant>
+	<constant name="struts.action.extension" value="do"></constant>
+	
+    <package name="default" namespace="/" extends="struts-default">
+    	<interceptors>
+    		<interceptor name="demo" class="com.cdsxt.interceptor.DemoInterceptor"></interceptor><!-- 1、声明 -->
+    		<interceptor-stack name="ttt">
+    			<interceptor-ref name="defaultStack"></interceptor-ref><!-- 2、添加到拦截器栈中 -->
+    			<interceptor-ref name="timer"></interceptor-ref>
+    			<interceptor-ref name="demo"></interceptor-ref>
+    		</interceptor-stack>
+    	</interceptors>
+    	
+    	<default-interceptor-ref name="ttt"></default-interceptor-ref><!-- 3、在默认配置中声明该自定义拦截器栈 -->
+    	
+		<action name="index" class="com.cdsxt.action.IndexAction" method="index">
+			<!-- <interceptor-ref name="timer"></interceptor-ref> --> <!-- 内置拦截器的使用 -->
+				<interceptor-ref name="ttt"></interceptor-ref><!-- 4、自定义拦截器的使用 -->
+		</action>
+		<action name="test" class="com.cdsxt.action.TestAction" method="index">
+		</action>
+    </package>
+</struts>

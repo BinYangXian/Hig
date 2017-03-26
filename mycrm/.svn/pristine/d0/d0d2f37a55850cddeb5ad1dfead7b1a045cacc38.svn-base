@@ -1,0 +1,30 @@
+package com.cdsxt.sell.po;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.xml.crypto.Data;
+
+import com.cdsxt.customer.po.Customer;
+import com.cdsxt.web.po.User;
+
+@Entity
+@Table(name="crm_indent")
+public class Indent {
+	@Id
+	private int id;
+	private String indentNumber; //订单号
+
+	private Data buyDate; //订单时间
+
+	@ManyToOne
+	@JoinColumn(name="customer_id")
+	private Customer customer; //客户--下单客户
+	
+	@ManyToOne
+	@JoinColumn(name="user_id")
+	private User user;   //该客户指派给员工(必须要)
+	
+}

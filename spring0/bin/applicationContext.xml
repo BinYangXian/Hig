@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 该文件名改为applicationContext.xml，根据其模型类型不同更名为applicationContext-dao.xml 等-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/util
+           http://www.springframework.org/schema/util/spring-util.xsd">
+
+
+	<!-- 
+		默认会在容器初始化的时候 进行实例化配置的bean
+		
+		bean
+			id			: 表示当前的bean在容器的唯一的名称  在整个容器中 是唯一的  如果不唯一 则会报错
+			class		：表示当前要初始化的类
+			lazy-init	：表示的是 是否延时加载 默认值为default  [default=false,false,true]
+			
+			init-method  初始化方法
+			destroy-method  销毁的方法
+		
+		
+	 -->
+	<bean 
+		id="beans" 
+		class="com.cdsxt.action.Beans" 
+		lazy-init="true" 
+		init-method="init" 
+		destroy-method="destroy">
+		
+		<!-- 
+			配置普通属性
+			
+			property
+				name  属性名  [setter]
+				value  字面值
+			
+		 -->
+		<property name="age" value="20"></property>
+		<property name="sal" value="2000"></property>
+		<property name="name">
+			<value>lisi</value>
+		</property>
+		
+		<!-- <property name="users" ref="users"></property> --><!-- 此处可以引用的id为users的bean对象
+		（该bean存在于spring的ioc容器中，在其它地方也可以使用），而下述方法相当于在beans里有一个属性为：
+		private Users users=new Users();-->
+		<property name="users">
+			<!-- 
+				可以声明各种数据
+			 -->
+			<bean class="com.cdsxt.po.Users">
+				<property name="age" value="23"></property>
+				<property name="id" value="2"></property>
+				<property name="name" value="wangwu"></property>
+			</bean>
+		</property>
+		<!-- 
+			声明集合
+		 -->
+		<property name="list">
+			<!-- 
+				merge    表示是否合并
+				value-type  值的类型
+			 -->
+			<list value-type="java.lang.String"><!-- value-type不一定需要，只有在类型为复合类型(自定义的类)时候必须 -->
+				<value>abc</value>
+				<value>def</value>
+				<value>cfg</value>
+			</list>
+		</property>
+		
+		<!-- 
+			多了一个key-type  键的类型
+		 -->
+		<property name="map">
+			<map>
+				<entry key="aaa" value="bbb"  />
+				<entry key="bbb" value="ccc"  />
+				<entry key="ddd" value="eee"  />
+			</map>
+		</property>
+		
+		<property name="set" ref="testset"></property>
+		
+		<property name="prop">
+			<props>
+				<prop key="jdbc_user">scott</prop>
+				<prop key="jdbc_pwd">123456</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<bean id="users" class="com.cdsxt.po.Users">
+		<property name="id" value="1"></property>
+		<property name="age" value="25"></property>
+		<property name="name" value="zhangsan"></property>
+	</bean>
+	<!-- 抽象类型的bean，需要abstract="true"，（不能被实例化）-->
+	<bean class="com.cdsxt.base.impl.BaseDaoImpl" id="baseDaoImpl" abstract="true"></bean>
+	<!-- 配置继承关系：parent="baseDaoImpl -->
+	<bean class="com.cdsxt.dao.impl.UsersDaoImpl" id="usersDao" parent="baseDaoImpl"></bean>
+	
+	<!-- 
+		util 提供了快捷的操作工具
+		
+		做法是将对应的数据构造成为ioc容器中可以直接使用的Bean
+		util:set
+		util:list
+		util:map
+		util:properties
+	 -->
+	 <!-- value-type不一定需要，只有在类型为复合类型(自定义的类)时候必须 -->
+	<util:set id="testset" set-class="java.util.HashSet" value-type="java.lang.String">
+		<value>aaaaa</value>
+		<value>bbbb</value>
+		<value>cccc</value>
+		<value>dddd</value>
+	</util:set>
+</beans>

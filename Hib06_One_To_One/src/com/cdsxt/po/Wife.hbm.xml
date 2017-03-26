@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping
+        SYSTEM
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.cdsxt.po">
+<!-- 这个例子建立两表间的关联是通过himbernate内部关联的，两表在数据库中没有关系 -->
+
+	 <class name="Wife" table="test_wife">
+	 	<id name="id" column="id">
+			<generator class="foreign">
+				<param name="property">husband</param>
+			</generator>
+	 	</id>
+	 	<property name="wname" column="wname"></property>
+	 	<one-to-one name="husband" class="Husband"></one-to-one>
+	 </class>
+</hibernate-mapping>

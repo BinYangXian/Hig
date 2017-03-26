@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/util
+           http://www.springframework.org/schema/util/spring-util.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context.xsd">
+
+
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location" value="classpath:db.properties"></property>
+	</bean>
+	
+	<context:property-placeholder location="classpath:db.properties"/>
+
+	<!-- 
+		默认会在容器初始化的时候 进行实例化配置的bean
+		
+		bean
+			id			: 表示当前的bean在容器的唯一的名称  在整个容器中 是唯一的  如果不唯一 则会报错
+			class		：表示当前要初始化的类
+			lazy-init	：表示的是 是否延时加载 默认值为default  [default=false,false,true]
+			
+			init-method  初始化方法
+			destroy-method  销毁的方法
+		
+		
+	 -->
+	<bean 
+		id="beans" 
+		class="com.cdsxt.action.Beans" 
+		lazy-init="true" 
+		init-method="init" 
+		destroy-method="destroy">
+		 <!-- 
+		 	构造器参数
+		 	
+		 	index  参数索引  起始位置从0开始
+		 	name  参数名称
+		 	ref  参数值的引用
+		 	type  参数的类型
+		 	value  参数的字面值
+		 
+		  -->
+		<!-- <constructor-arg index="0" value="20"></constructor-arg>
+		<constructor-arg index="1" value="zhangsan"></constructor-arg> -->
+		<constructor-arg value="zhangsan"></constructor-arg>
+		<constructor-arg value="20"></constructor-arg>
+		
+		<!-- 
+			配置普通属性
+			
+			property
+				name  属性名  [setter]
+				value  字面值
+			
+		 -->
+		 
+		 
+		
+		<property name="age" value="20"></property>
+		<property name="sal" value="2000"></property>
+		<property name="name">
+			<value>lisi</value>
+		</property>
+		
+		<!-- <property name="users" ref="users"></property> -->
+		<property name="users">
+			<!-- 
+				可以声明各种数据
+			 -->
+			<bean class="com.cdsxt.po.Users">
+				<property name="age" value="23"></property>
+				<property name="id" value="2"></property>
+				<property name="name" value="wangwu"></property>
+			</bean>
+		</property>
+		<!-- 
+			声明集合
+		 -->
+		<property name="list">
+			<!-- 
+				merge    表示是否合并
+				value-type  值的类型
+			 -->
+			<list value-type="java.lang.String">
+				<value>abc</value>
+				<value>def</value>
+				<value>cfg</value>
+			</list>
+		</property>
+		
+		<!-- 
+			多了一个key-type  键的类型
+		 -->
+		<property name="map">
+			<map>
+				<entry key="aaa" value="bbb"  />
+				<entry key="bbb" value="ccc"  />
+				<entry key="ddd" value="eee"  />
+			</map>
+		</property>
+		
+		<property name="set" ref="testset"></property>
+		
+		<property name="prop">
+			<props>
+				<prop key="jdbc_user">scott</prop>
+				<prop key="jdbc_pwd">123456</prop>
+			</props>
+		</property>
+		
+		<property name="strs">
+			<array>
+				<value>aaaa</value>
+				<value>vvv</value>
+				<value>ccc</value>
+			</array>
+		</property>
+	</bean>
+	
+	<bean class="com.cdsxt.base.impl.BaseDaoImpl" id="baseDaoImpl" abstract="true"></bean>
+
+	<bean class="com.cdsxt.dao.impl.UsersDaoImpl" id="usersDao" parent="baseDaoImpl"></bean>
+	
+	<bean id="users" class="com.cdsxt.po.Users">
+		<property name="id" value="1"></property>
+		<property name="age" value="25"></property>
+		<property name="name" value="zhangsan"></property>
+	</bean>
+	
+	<!-- 
+		util 提供了快捷的操作工具
+		
+		做法是将对应的数据构造成为ioc容器中可以直接使用的Bean
+		util:set
+		util:list
+		util:map
+		util:properties
+	 -->
+	 
+	<util:set id="testset" set-class="java.util.HashSet" value-type="java.lang.String">
+		<value>aaaaa</value>
+		<value>bbbb</value>
+		<value>cccc</value>
+		<value>dddd</value>
+	</util:set>
+	
+	<util:properties id="jdbc" location="classpath:db.properties">
+	
+	</util:properties>
+	
+	<bean id="dataSource" class="com.cdsxt.po.DataSource">
+		<property name="user" value="${jdbc_user}"></property><!-- 类EL表达式的取法 -->
+		<property name="pwd" value="${jdbc_pwd}"></property>
+		<property name="url" value="${jdbc_url}"></property>
+		<property name="driver" value="${jdbc_driver}"></property>
+	</bean>
+	<bean id="dataSource1" class="com.cdsxt.po.DataSource">
+		<property name="user" value="#{jdbc.jdbc_user}"></property><!-- spring的取值法 -->
+		<property name="pwd" value="#{jdbc.jdbc_pwd}"></property>
+		<property name="url" value="#{jdbc.jdbc_url}"></property>
+		<property name="driver" value="#{jdbc.jdbc_driver}"></property>
+	</bean>
+</beans>

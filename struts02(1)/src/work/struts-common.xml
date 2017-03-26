@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+
+	
+	<package name="common" namespace="/" extends="base">
+		<action name="loginAction" class="com.cdsxt.action.LoginAction" method="login"></action>
+	</package>
+    
+    
+</struts>

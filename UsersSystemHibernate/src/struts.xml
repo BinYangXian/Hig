@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+
+	
+	<!-- 
+	
+		如果要想让struts直接返回json  则一定要导入struts-json 的插件   然后在让包继承 json-default
+	 -->
+	<constant name="struts.enable.DynamicMethodInvocation" value="true"></constant>
+	
+    <package name="default" namespace="/" extends="json-default">
+		<action name="usersAction" class="com.cdsxt.action.UsersAction" method="findAll">
+			<result name="findAll">/views/users/index.jsp</result>
+			<result name="save-success" type="redirectAction">usersAction</result>
+			<result name="stream-json" type="stream"></result>
+			<result name="json" type="json">
+				<param name="root">user</param>
+			</result>
+		</action>
+    </package>
+</struts>

@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping
+        SYSTEM
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.cdsxt.po">
+
+
+	 <class name="Emp" table="emp">
+	 
+	 	<id name="empno" >
+	 		<generator class="assigned" />
+	 	</id>
+	 	<property name="job"></property>
+	 	<property name="ename"></property>
+	 	<property name="sal"></property>
+	 	<property name="comm"></property>
+	 	<property name="hiredate"></property>
+	 	
+	 	<set name="emps" inverse="true">
+	 		<key column="mgr"></key>
+	 		<one-to-many class="Emp"/>
+	 	</set>
+	 	<many-to-one name="manager" class="Emp" column="mgr"></many-to-one>
+	 	
+	 	
+	 	<many-to-one name="dept" class="Dept" column="deptno"></many-to-one>
+	 	
+	 </class>
+</hibernate-mapping>
