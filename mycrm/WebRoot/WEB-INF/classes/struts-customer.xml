@@ -3,9 +3,10 @@
     "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
     "http://struts.apache.org/dtds/struts-2.3.dtd">
 <struts>
-	<package name="customer" extends="power">
-	<action name="customerInfo" class="customerInfo">
-			<result name="findAll">/power/sell/findAllSell.jsp</result>
+	<package name="customer"  extends="power">
+	<action name="customerAction" class="customerAction">
+			<result name="findAll">/views/customer/index.jsp</result>
+			<result name="findAllSelectionInfo">/views/customer/addUser.jsp</result>
 	</action>
 	</package>
 </struts>

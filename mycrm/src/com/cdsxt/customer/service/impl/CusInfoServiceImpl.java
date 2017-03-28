@@ -2,6 +2,7 @@ package com.cdsxt.customer.service.impl;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -11,6 +12,7 @@ import com.cdsxt.customer.service.CusInfoService;
 @Service
 @Transactional(readOnly=true)
 public class CusInfoServiceImpl implements CusInfoService{
+	@Autowired
 	private CusInfoDao cusInfoDao;
 	@Override
 	public List<CrmCustomer> findAllCustomer() {
@@ -33,6 +35,22 @@ public class CusInfoServiceImpl implements CusInfoService{
 		this.cusInfoDao.updateCustomer(cusId,crmCustomer);
 		
 	}
+
+	@Override
+	public List<String> findAllCrmCusAreaNames() {
+		return this.cusInfoDao.findAllCrmCusAreaNames();
+	}
+
+	@Override
+	public List<String> findAllLevelName() {
+		return this.cusInfoDao.findAllLevelName();
+	}
+
+	@Override
+	public List<String> findAllLinkmanNames() {
+		return this.cusInfoDao.findAllLinkmanNames();
+	}
+
 
 
 }

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
+import com.cdsxt.customer.po.CrmCusArea;
 import com.cdsxt.customer.po.CrmCustomer;
 import com.cdsxt.customer.po.CusContactLog;
 import com.cdsxt.customer.po.CusLinkman;
@@ -19,23 +20,57 @@ public class CustomerAction {
 	private CusContactLog contactLog ;
 	private HistoryOrder historyOrder ;
 	private List<CrmCustomer> crmCustomers ;
+	private List<String> crmCusAreaNames;
+	private List<String> areaNames;
+	private List<String> linkmanNames;
+	
+	public List<CrmCustomer> getCrmCustomers() {
+		return crmCustomers;
+	}
+	public void setCrmCustomers(List<CrmCustomer> crmCustomers) {
+		this.crmCustomers = crmCustomers;
+	}
+	public List<String> getLinkmanNames() {
+		return linkmanNames;
+	}
+	public void setLinkmanNames(List<String> linkmanNames) {
+		this.linkmanNames = linkmanNames;
+	}
+	public List<String> getAreaNames() {
+		return areaNames;
+	}
+	public void setAreaNames(List<String> areaNames) {
+		this.areaNames = areaNames;
+	}
+	public List<String> getCrmCusAreaNames() {
+		return crmCusAreaNames;
+	}
+	public void setCrmCusAreaNames(List<String> crmCusAreaNames) {
+		this.crmCusAreaNames = crmCusAreaNames;
+	}
 	@Autowired
 	private CusInfoService cusInfoService;
-	private String findAllCustomer(){
+	public String findAll(){
 		this.crmCustomers=this.cusInfoService.findAllCustomer();
 		return "findAll";
 	}
-	private String addCustomer(){
+	public String findAllSelectionInfo(){
+		this.crmCusAreaNames=this.cusInfoService.findAllCrmCusAreaNames();
+		this.areaNames=this.cusInfoService.findAllLevelName();
+		this.linkmanNames=this.cusInfoService.findAllLinkmanNames();
+		return "findAllSelectionInfo";
+	}
+	public String addCustomer(){
 		if(crmCustomer!=null){
 			this.cusInfoService.addCustomer(crmCustomer);
 		}
 		return "findAll";
 	}
-	private String deleCustomer(){
+	public String deleCustomer(){
 		this.cusInfoService.deleCustomer(crmCustomer.getCusId());
 		return "findAll";
 	}
-	private String saveCustomer(){
+	public String saveCustomer(){
 		this.cusInfoService.updateCustomer(crmCustomer.getCusId(),crmCustomer);
 		return "findAll";
 	}

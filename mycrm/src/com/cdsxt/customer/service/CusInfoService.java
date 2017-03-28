@@ -9,4 +9,7 @@ public interface CusInfoService {
 	void addCustomer(CrmCustomer c);
 	void deleCustomer(Integer i);
 	void updateCustomer(Integer cusId, CrmCustomer crmCustomer);
+	List<String> findAllCrmCusAreaNames();
+	List<String> findAllLevelName();
+	List<String> findAllLinkmanNames();
 }

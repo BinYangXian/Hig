@@ -2,6 +2,9 @@ package com.cdsxt.customer.po;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import com.cdsxt.web.po.User;
+
 import java.util.Set;
 
 
@@ -11,7 +14,6 @@ import java.util.Set;
  */
 @Entity
 @Table(name="crm_customer")
-@NamedQuery(name="CrmCustomer.findAll", query="SELECT c FROM CrmCustomer c")
 public class CrmCustomer implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -88,16 +90,17 @@ public class CrmCustomer implements Serializable {
 
 	//bi-directional many-to-one association to User
 	@ManyToOne
-	@JoinColumn(name="users_id")
-	private CrmUser user;
+	@JoinColumn(name="user_id")
+	private User user;
 
 	//bi-directional many-to-one association to CusContactLog
 	@OneToMany(mappedBy="crmCustomer")
 	private Set<CusContactLog> cusContactLogs;
 
 	//bi-directional many-to-one association to CusLinkman
-	@OneToMany(mappedBy="crmCustomer")
-	private Set<CusLinkman> cusLinkmans;
+	@ManyToOne
+	@JoinColumn(name="cus_linkman_id")
+	private CusLinkman cusLinkman;
 
 	//bi-directional many-to-one association to CusStaMsg
 	@OneToMany(mappedBy="crmCustomer")
@@ -294,11 +297,11 @@ public class CrmCustomer implements Serializable {
 		this.crmCusLevel = crmCusLevel;
 	}
 
-	public CrmUser getUser() {
+	public User getUser() {
 		return this.user;
 	}
 
-	public void setUser(CrmUser user) {
+	public void setUser(User user) {
 		this.user = user;
 	}
 
@@ -324,27 +327,17 @@ public class CrmCustomer implements Serializable {
 		return cusContactLog;
 	}
 
-	public Set<CusLinkman> getCusLinkmans() {
-		return this.cusLinkmans;
-	}
 
-	public void setCusLinkmans(Set<CusLinkman> cusLinkmans) {
-		this.cusLinkmans = cusLinkmans;
-	}
 
-	public CusLinkman addCusLinkman(CusLinkman cusLinkman) {
-		getCusLinkmans().add(cusLinkman);
-		cusLinkman.setCrmCustomer(this);
-
+	public CusLinkman getCusLinkman() {
 		return cusLinkman;
 	}
 
-	public CusLinkman removeCusLinkman(CusLinkman cusLinkman) {
-		getCusLinkmans().remove(cusLinkman);
-		cusLinkman.setCrmCustomer(null);
-
-		return cusLinkman;
+	public void setCusLinkman(CusLinkman cusLinkman) {
+		this.cusLinkman = cusLinkman;
 	}
+
+
 
 	public Set<CusStaMsg> getCusStaMsgs() {
 		return this.cusStaMsgs;

@@ -15,29 +15,49 @@ import com.cdsxt.customer.po.CrmCustomer;
 public class CusInfoDaoImpl implements CusInfoDao{
 	@Autowired
 	private SessionFactory sessionFactory;
-	private Session currentSession = this.sessionFactory.getCurrentSession();
+	protected Session getSession() {
+		return this.sessionFactory.getCurrentSession();
+	}
 	@Override
 	public List<CrmCustomer> findAllCustomer() {
-		Query query = currentSession.createQuery("from CrmCustomer c");
+		Query query = this.getSession().createQuery("from CrmCustomer c");
 		return query.list();
 	}
 
 	@Override
 	public void addCustomer(CrmCustomer c) {
-		currentSession.save(c);		
+		this.getSession().save(c);		
 	}
 
 	@Override
 	public void deleCustomer(Integer i) {
-		currentSession.createQuery("select c from CrmCustomer c where c.cusId=:i")
-		currentSession.delete(arg0);
-		
+		CrmCustomer c = (CrmCustomer) this.getSession().get(CrmCustomer.class, i);
+		if(c!=null){
+			this.getSession().delete(c);
+		}
 	}
 
 	@Override
 	public void updateCustomer(Integer cusId, CrmCustomer crmCustomer) {
-		// TODO Auto-generated method stub
-		
+		CrmCustomer c = (CrmCustomer) this.getSession().get(CrmCustomer.class, cusId);
+		if(c!=null){
+			this.getSession().update(crmCustomer);
+		}
+	}
+	@Override
+	public List<String> findAllCrmCusAreaNames() {
+		Query query = this.getSession().createQuery("select c.areaName from CrmCusArea c");
+		return query.list();
+	}
+	@Override
+	public List<String> findAllLevelName() {
+		Query query = this.getSession().createQuery("select c.levelName from CrmCusLevel c");
+		return query.list();
+	}
+	@Override
+	public List<String> findAllLinkmanNames() {
+		Query query = this.getSession().createQuery("select c.linkmanName from CusLinkman c");
+		return query.list();
 	}
 
 }
