@@ -1,6 +1,0 @@
-jdbc_url=jdbc:mysql://localhost:3306/crm
-jdbc_user=root
-jdbc_password=123456
-hibernate.show_sql=true
-hibernate.format_sql=true
-hibernate.hbm2ddl.auto=update
