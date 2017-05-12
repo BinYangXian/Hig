@@ -28,7 +28,7 @@
     
     
      -->
-
+<!-- 一、开启spring的自动扫描。并注入？-->
 	<context:component-scan base-package="com.cdsxt" />
 
 	<util:properties id="jdbc"><!-- 记得导入命名空间 -->
@@ -39,7 +39,7 @@
 	<!-- spring帮我们封装的jdbc就可以理解为，中级学的DaseDao；需要事务管理器-相当于aop，在我们真正要执行的方法之前开启事务
 	，在执行之后帮我提交之；事务管理器依赖aop而建立起来的；tx包与aop的jar包一般应同在；需要spring的plugin插件；log4j.properties
 	输出himbernate的日志信息 -->
-	<!-- druid-数据库连接池，号称为监控而生的(卢说过需要搭配事务管理器才能使用？) -->
+	<!-- 二、配置druid数据库连接池，号称为监控而生的(卢说过需要搭配事务管理器才能使用) -->
 	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
 		init-method="init" destroy-method="close">
 		<!-- 基本属性 url、user、password -->
@@ -74,7 +74,7 @@
 		<property name="filters" value="stat" />
 	</bean>
 
-	<!-- 配置Hibernate -->
+	<!-- 三、配置Hibernate -->
 	<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
 	
 		<property name="dataSource" ref="dataSource"></property>
@@ -91,6 +91,7 @@
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
 <!-- =======================================分割线=======================================-->
+<!-- 四、配置事务管理器： -->
 <!-- 1、声明式的事务管理器，需要采用aop中的横截面切入代码段的方法，引入事务管理器（aop的是基于代理模式） -->
 <!-- 	<tx:advice transaction-manager="transactionManager" id="txAdvice">transaction-manager默认="transactionManager"
 	，如果上述的id等于此，则这里可以省略之；这里是事务的第一种传递方式
@@ -118,7 +119,7 @@
 		，因为这有advice-ref了？
 	</aop:config> -->
 <!-- =======================================分割线=======================================-->
-<!-- 2、编程式事务：开启后使用注解可替代上述，在工作中居多(这里还需要声明注解要针对哪些事务管理器)-->
+<!-- 2、编程式事务之注解法：开启后使用注解可替代上述，在工作中居多(这里还需要声明注解要针对哪些事务管理器)-->
 	<tx:annotation-driven transaction-manager="transactionManager"/>
 <!-- 3、编程式事务之事务模板:这样以后在当前的项目的UsersDaoImpl中，就都持有这个事务模板了，详见UsersDaoImpl-->
 <!-- 总结：一般来说，我们都是以xml方式，把我们的事务管理器给配置好，开启编程式事务，通过注解方式，标注有事务。 -->
@@ -126,3 +127,4 @@
 		<property name="transactionTemplate" ref="transactionManager"></property>
 	</bean>
 </beans>
+
