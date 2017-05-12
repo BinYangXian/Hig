@@ -80,12 +80,12 @@ public class CrmCustomer implements Serializable {
 
 	//bi-directional many-to-one association to CrmCusArea
 	@ManyToOne
-	@JoinColumn(name="area_id")
+	@JoinColumn(name="area_num")
 	private CrmCusArea crmCusArea;
 
 	//bi-directional many-to-one association to CrmCusLevel
 	@ManyToOne
-	@JoinColumn(name="level_id")
+	@JoinColumn(name="level_num")
 	private CrmCusLevel crmCusLevel;
 
 	//bi-directional many-to-one association to User

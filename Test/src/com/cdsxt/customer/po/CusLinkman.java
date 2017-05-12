@@ -1,6 +1,8 @@
 package com.cdsxt.customer.po;
 
 import java.io.Serializable;
+import java.util.List;
+
 import javax.persistence.*;
 
 
@@ -44,9 +46,8 @@ public class CusLinkman implements Serializable {
 	private String remark3;
 
 	//bi-directional many-to-one association to CrmCustomer
-	@ManyToOne
-	@JoinColumn(name="cus_id")
-	private CrmCustomer crmCustomer;
+	@OneToMany(mappedBy="cusLinkman")
+	private List<CrmCustomer> crmCustomers;
 
 	public CusLinkman() {
 	}
@@ -131,12 +132,14 @@ public class CusLinkman implements Serializable {
 		this.remark3 = remark3;
 	}
 
-	public CrmCustomer getCrmCustomer() {
-		return this.crmCustomer;
+	public List<CrmCustomer> getCrmCustomers() {
+		return crmCustomers;
 	}
 
-	public void setCrmCustomer(CrmCustomer crmCustomer) {
-		this.crmCustomer = crmCustomer;
+	public void setCrmCustomers(List<CrmCustomer> crmCustomers) {
+		this.crmCustomers = crmCustomers;
 	}
+
+
 
 }

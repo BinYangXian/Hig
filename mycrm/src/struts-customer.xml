@@ -7,6 +7,8 @@
 	<action name="customerAction" class="customerAction">
 			<result name="findAll">/views/customer/index.jsp</result>
 			<result name="findAllSelectionInfo">/views/customer/addUser.jsp</result>
+			<result name="reFindAll" type="redirectAction">/power/customerAction!findAll.action</result>
+			<result name="showDetails" >/views/customer/customerInfoDetail.jsp</result>
 	</action>
 	</package>
 </struts>

@@ -12,4 +12,5 @@ public interface CusInfoDao {
 	List<String> findAllCrmCusAreaNames();
 	List<String> findAllLevelName();
 	List<String> findAllLinkmanNames();
+	CrmCustomer findCusDetailInfo(Integer cusId);
 }

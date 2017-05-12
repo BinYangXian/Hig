@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cdsxt.customer.dao.CusInfoDao;
@@ -18,18 +19,18 @@ public class CusInfoServiceImpl implements CusInfoService{
 	public List<CrmCustomer> findAllCustomer() {
 		return this.cusInfoDao.findAllCustomer();
 	}
-
+	@Transactional(propagation=Propagation.REQUIRED)
 	@Override
 	public void addCustomer(CrmCustomer c) {
 		this.cusInfoDao.addCustomer(c);
 	}
-
+	@Transactional(propagation=Propagation.REQUIRED)
 	@Override
 	public void deleCustomer(Integer i) {
 		this.cusInfoDao.deleCustomer(i);
 		
 	}
-
+	@Transactional(propagation=Propagation.REQUIRED)
 	@Override
 	public void updateCustomer(Integer cusId, CrmCustomer crmCustomer) {
 		this.cusInfoDao.updateCustomer(cusId,crmCustomer);
@@ -49,6 +50,10 @@ public class CusInfoServiceImpl implements CusInfoService{
 	@Override
 	public List<String> findAllLinkmanNames() {
 		return this.cusInfoDao.findAllLinkmanNames();
+	}
+	@Override
+	public CrmCustomer findCusDetailInfo(Integer cusId) {
+		return this.cusInfoDao.findCusDetailInfo(cusId);
 	}
 
 

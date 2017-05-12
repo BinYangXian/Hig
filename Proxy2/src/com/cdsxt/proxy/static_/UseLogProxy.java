@@ -12,12 +12,13 @@ public class UseLogProxy implements UsersService {
 
 	@Override
 	public void delete() {
+		System.out.println("调用了delete方法");
 		this.usersService.delete();
 	}
 
 	@Override
 	public void save() {
-		System.out.println("调用了方法");
+		System.out.println("调用了save方法");
 		this.usersService.save();
 	}
 

@@ -56,7 +56,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="panel panel-default">
-					<table class="table table-bordered table-hover">
+					<table class="table table-bordered table-hover" >
 						<tr>
 							<th style="background-color:#AFD5ED;text-align:center;vertical-align:middle">客户编号</th>
 							<th><input type="text" disabled="disabled"></th>

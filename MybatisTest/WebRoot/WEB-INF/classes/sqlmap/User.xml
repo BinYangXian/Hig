@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace命名空间，分离sql语句 -->
+<!-- mapper.xml中配置sql语句，执行时将sql语句封装成MappedStatement对象 -->
+<mapper namespace="test">
+<!-- #{id}：占位符    id命名随意  
+ 	parameterType:参数类型  参数通过#{id}接收  
+	resultType:输出类型
+ -->
+	<select id="findUserById" parameterType="int" resultType="com.cdsxt.mybatis.po.User">
+		Select * from User where id=#{id}
+	</select>	
+</mapper>

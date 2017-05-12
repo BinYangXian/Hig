@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
-import com.cdsxt.customer.po.CrmCusArea;
 import com.cdsxt.customer.po.CrmCustomer;
 import com.cdsxt.customer.po.CusContactLog;
 import com.cdsxt.customer.po.CusLinkman;
@@ -24,35 +23,18 @@ public class CustomerAction {
 	private List<String> areaNames;
 	private List<String> linkmanNames;
 	
-	public List<CrmCustomer> getCrmCustomers() {
-		return crmCustomers;
-	}
-	public void setCrmCustomers(List<CrmCustomer> crmCustomers) {
-		this.crmCustomers = crmCustomers;
-	}
-	public List<String> getLinkmanNames() {
-		return linkmanNames;
-	}
-	public void setLinkmanNames(List<String> linkmanNames) {
-		this.linkmanNames = linkmanNames;
-	}
-	public List<String> getAreaNames() {
-		return areaNames;
-	}
-	public void setAreaNames(List<String> areaNames) {
-		this.areaNames = areaNames;
-	}
-	public List<String> getCrmCusAreaNames() {
-		return crmCusAreaNames;
-	}
-	public void setCrmCusAreaNames(List<String> crmCusAreaNames) {
-		this.crmCusAreaNames = crmCusAreaNames;
-	}
 	@Autowired
 	private CusInfoService cusInfoService;
 	public String findAll(){
 		this.crmCustomers=this.cusInfoService.findAllCustomer();
 		return "findAll";
+	}
+	public String findCusDetailInfo(){
+		CrmCustomer customer = this.cusInfoService.findCusDetailInfo(crmCustomer.getCusId());
+		if(customer!=null){
+			this.crmCustomer=customer;
+		}
+		return "showDetails";
 	}
 	public String findAllSelectionInfo(){
 		this.crmCusAreaNames=this.cusInfoService.findAllCrmCusAreaNames();
@@ -64,7 +46,7 @@ public class CustomerAction {
 		if(crmCustomer!=null){
 			this.cusInfoService.addCustomer(crmCustomer);
 		}
-		return "findAll";
+		return "reFindAll";
 	}
 	public String deleCustomer(){
 		this.cusInfoService.deleCustomer(crmCustomer.getCusId());
@@ -99,6 +81,29 @@ public class CustomerAction {
 		this.historyOrder = historyOrder;
 	}
 	
-	
+	public List<CrmCustomer> getCrmCustomers() {
+		return crmCustomers;
+	}
+	public void setCrmCustomers(List<CrmCustomer> crmCustomers) {
+		this.crmCustomers = crmCustomers;
+	}
+	public List<String> getLinkmanNames() {
+		return linkmanNames;
+	}
+	public void setLinkmanNames(List<String> linkmanNames) {
+		this.linkmanNames = linkmanNames;
+	}
+	public List<String> getAreaNames() {
+		return areaNames;
+	}
+	public void setAreaNames(List<String> areaNames) {
+		this.areaNames = areaNames;
+	}
+	public List<String> getCrmCusAreaNames() {
+		return crmCusAreaNames;
+	}
+	public void setCrmCusAreaNames(List<String> crmCusAreaNames) {
+		this.crmCusAreaNames = crmCusAreaNames;
+	}
 	
 }

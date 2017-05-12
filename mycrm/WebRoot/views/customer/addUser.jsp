@@ -8,7 +8,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<form action="#" method="post">
+	<form action="power/frame/customer/customerAction!addCustomer.action" method="post">
 		<table class="table table-bordered table-hover"  width="80%" border="1px">
 			<tr>
 				<th style="background-color:#AFD5ED;text-align:center;vertical-align:middle">名称</th>
@@ -17,7 +17,7 @@
 				</th>
 				<th style="background-color:#AFD5ED;text-align:center;vertical-align:middle">客户等级</th>
 				<th>
-					<select name="crmCustomer.cusLevel.levelName">
+					<select name="crmCustomer.crmCusLevel.levelName">
 		                <option >请选择</option>
 		                <c:forEach items="${areaNames }" var="a" >
 		                	<option>${a }</option>
@@ -37,7 +37,7 @@
 				</th>
 				<th style="background-color:#AFD5ED;text-align:center;vertical-align:middle">客户经理</th>
 				<th>
-					<select name="crmCustomer.cusLinkman.cusLinkmanName">
+					<select name="crmCustomer.cusLinkman.linkmanName">
 		                <option >请选择</option>
 		                  <c:forEach items="${linkmanNames }" var="l" >
 		                	<option >${l }</option>

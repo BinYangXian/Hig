@@ -15,6 +15,12 @@
 <script src="assets/js/jquery-1.4.4.js"></script>
 </head>
 <body>
+<%-- <jsp:include page="/ueditor/demo.jsp" ></jsp:include> --%>
+<%--  <jsp:include page="/ueditor/demo.html">
+    				<jsp:param value="employeeServlet" name="url"/>
+</jsp:include> --%>
+ <!-- 加载编辑器的容器 -->
+
 	<table width="100%" border="0" align="center" cellpadding="0"
 		cellspacing="0">
 		<tr>
@@ -50,18 +56,7 @@
 													</div></td>
 											</tr>
 										</table></td>
-									<td width="60"><table width="90%" border="0"
-											cellpadding="0" cellspacing="0">
-											<tr>
-												<td class="STYLE1"><div align="center">
-														<img src="assets/images/114.gif" width="14" height="14" />
-													</div></td>
-												<td class="STYLE1"><div align="center">
-														<a href="javascript:void(0);" id="updateA"
-															onclick="update();">修改</a>
-													</div></td>
-											</tr>
-										</table></td>
+								
 									<td width="52"><table width="88%" border="0"
 											cellpadding="0" cellspacing="0">
 											<tr>
@@ -168,7 +163,7 @@
 											<div align="center" class="STYLE2 STYLE1">${cus.crmCusArea.areaName }</div>
 										</td>
 										<td height="18" bgcolor="#FFFFFF">
-											<div align="center" class="STYLE2 STYLE1">${cus.cusLinkman.cusLinkmanName }</div>
+											<div align="center" class="STYLE2 STYLE1">${cus.cusLinkman.linkmanName }</div>
 										</td>
 										<td height="18" bgcolor="#FFFFFF">
 											<div align="center" class="STYLE2 STYLE1">${cus.crmCusLevel.levelName }</div>
@@ -178,6 +173,7 @@
 												<span class="STYLE1">[</span>
 												<img src="assets/images/037.gif" width="9" height="9" />
 												<a href="customer/customerAction!findByCusId?customer.cusId=${cus.cusId }">编辑</a>
+												<a href="power/frame/customer/customerAction!findCusDetailInfo.action?customer.cusId=${cus.cusId }">详情</a>
 												<span class="STYLE1">]</span>
 											</div>
 										</td>
@@ -211,4 +207,5 @@
 		</tr>
 	</table>
 </body>
+ 
 </html>
