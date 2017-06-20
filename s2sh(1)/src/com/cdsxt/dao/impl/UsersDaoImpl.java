@@ -12,7 +12,7 @@ import org.springframework.transaction.support.TransactionTemplate;
 
 import com.cdsxt.dao.UsersDao;
 import com.cdsxt.po.Users;
-
+//!!!!!!!!!!!!!-这里的事务都应该转移到service层-!!!!!!!!!!!!!
 @Repository
 @Transactional(readOnly=true) //类里的所有方法都有事务，默认为(propagation=Propagation.REQUIRED),现改之
 public class UsersDaoImpl implements UsersDao {

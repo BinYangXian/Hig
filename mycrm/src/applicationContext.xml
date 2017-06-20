@@ -45,7 +45,7 @@
 				<prop key="hibernate.show_sql">false</prop>
 				<prop key="hibernate.format_sql">false</prop>
 				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
-			 <!-- <prop key="hibernate.hbm2ddl.auto">update</prop> -->
+			 <!-- 此句危险，实际开发中，不要放开！！！<prop key="hibernate.hbm2ddl.auto">update</prop> 此句危险，实际开发中，不要放开！！！-->
 			</props>
 		</property>
 		<!-- 自动扫描实体类 -->

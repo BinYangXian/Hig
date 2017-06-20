@@ -12,12 +12,13 @@
 		
 		设置 struts的 工厂类  <constant name="struts.objectFactory" value="spring"></constant>
 		
-		设置  action为多例
+		1、设置  action为多例
 	 -->
-	
+	<!-- 2、配置方法动态调用 -->
 	<constant name="struts.enable.DynamicMethodInvocation" value="true"></constant>
+	<!-- 3、配置工厂 -->
 	<constant name="struts.objectFactory" value="spring"></constant>
-	
+	<!-- 4、配置action 注意 class值的来源于  IOC容器 -->
     <package name="default" namespace="/" extends="struts-default">
     	<action name="usersAction" class="usersAction" method="findAll"></action>
     </package>

@@ -40,7 +40,7 @@ public class TestSave {
 	
 	@Test
 	public void testFind(){
-		ClassInfo info = (ClassInfo) HibUtil.getSession().get(ClassInfo.class, 6);
+		ClassInfo info = (ClassInfo) HibUtil.getSession().createQuery("from ClassInfo").list().get(0);  
 		
 		Set<Student> ss = info.getStudents();
 		

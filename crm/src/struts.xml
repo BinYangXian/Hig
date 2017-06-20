@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+
+
+	<!-- 开启方法动态调用   actionName!methodName -->
+	<constant name="struts.enable.DynamicMethodInvocation" value="true"></constant>
+	
+	<constant name="struts.objectFactory" value="spring"></constant>
+	
+	<package name="crm" namespace="/" extends="json-default">
+	
+		<!-- 配置拦截器 -->
+		<interceptors>
+			<interceptor name="powerInterceptor" class="com.cdsxt.intercepter.PowerInterceptor" />
+			<interceptor-stack name="security">
+				<interceptor-ref name="powerInterceptor" />
+				<interceptor-ref name="defaultStack"></interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+		
+		<default-interceptor-ref name="security" />
+	
+	
+		<global-results>
+			<result name="login">/login.jsp</result>
+			<result name="main" type="redirect">/main/main.jsp</result>
+			<result name="logout" type="redirect">/login.jsp</result>
+			<result name="nopower">/common/nopower.jsp</result>
+		</global-results>
+	</package>
+
+    <package name="power" namespace="/power" extends="crm">
+    	<action name="loginAction" class="loginAction" method="login">
+    		<result name="findAllRoles" type="json">
+    			<param name="root">roleVos</param>
+    		</result>
+    		<result name="findAllToLeft" type="json">
+    			<param name="root">menuVos</param>
+    		</result>
+    	</action>
+    	<action name="menuAction" class="menuAction" method="findAll">
+    		<result name="left" type="json">
+    			<param name="root">vos</param>
+    		</result>
+    		<result name="menus">/power/menus/index.jsp</result>
+    	</action>
+    	
+    	<action name="usersAction" class="usersAction" method="findAll">
+    		<result name="users">/power/users/index.jsp</result>
+    		<result name="findAllRoleToChoose">/power/users/choose.jsp</result>
+    		<result name="updateChooseRole" type="redirectAction">usersAction</result>
+    		<result name="findAllRoleInUsersToJson" type="json">
+    			<param name="root">roleVos</param>
+    		</result>
+    	</action>
+    	
+    	<action name="roleAction" class="roleAction" method="findAll">
+    		<result name="roles">/power/role/index.jsp</result>
+    		<result name="findAllMenuToChooseView">/power/role/chooseMenu.jsp</result>
+    		<result name="findAllMenuToChooseJson" type="json">
+    			<param name="root">menuVos</param>
+    		</result>
+    		<result name="updateChooseMenu" type="redirectAction">roleAction</result>
+    		
+    		<result name="findAllModuleToChooseView">/power/role/chooseModule.jsp</result>
+    		<result name="findAllModuleToChooseJson">/power/role/chooseModule.jsp</result>
+    		<result name="updateChooseModule">/power/role/chooseModule.jsp</result>
+    	</action>
+    </package>
+</struts>

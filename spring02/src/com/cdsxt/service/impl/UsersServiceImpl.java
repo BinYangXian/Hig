@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import com.cdsxt.dao.UsersDao;
 import com.cdsxt.service.UsersService;
 
-@Service
+@Service("a")
 public class UsersServiceImpl implements UsersService {
 
 	@Resource
@@ -15,7 +15,7 @@ public class UsersServiceImpl implements UsersService {
 	
 	@Override
 	public void delete() {
-		System.out.println("UsersServiceImpl.delete()");
+		System.out.println("UsersServiceImpl.delete()++++++++++++++++++++++++++++");
 		this.usersDao.delete();
 	}
 

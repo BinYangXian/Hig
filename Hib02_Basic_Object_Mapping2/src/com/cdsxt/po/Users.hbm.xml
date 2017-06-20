@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping
+        SYSTEM
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.cdsxt.po">
+
+	<!-- 
+		package  指定的是  子元素中使用到的class所在的包   在定义的时候 只需要写类名  否则 需要写上全局限定名
+		
+		在一个mapping文件中  可以映射多个类   但是为了方便维护 一般只是在 一个映射文件中  写一个类
+		
+	 -->
+	 <!-- 
+	 	name  实体类
+	 	table 表名
+	 	lazy  懒加载
+	  -->
+	 <class name="Users" table="test_users" >
+	 	<!-- 
+	 	
+	 		主键 
+	 		
+	 			name  指的是   在java类中的属性
+	 			column  指的是  生成到数据库中的列名
+	 			
+	 		联合主键
+	 	
+	 	-->
+	 	<id name="id" column="u_id">
+	 		<!-- 
+	 			主键生成器 
+	 			assigned  手动指定  在oracle中常用
+	 			
+	 			native  如果是有自增长的策略  则使用数据库自己的 自增长   如果没有该特性 则使用序列
+	 					MySQL  自增长
+	 					Oracle 序列(HIBERNATE_SEQUENCE)  不常用（所有的表都使用同一个序列）
+	 					
+	 			identity 自增长  在MySQL很常用   但是在Oracle中  不能用
+	 			
+	 			sequence  序列  在Oracle很常用  如果设置了hibernate.hbm2ddl.auto,  在数据库中没有的东西 都会帮我们创建
+	 			
+	 			uuid  全球唯一标识符  主要使用于分布式
+	 		-->
+	 		<!-- <generator class="sequence">
+	 			<param name="sequence">seq_test_users</param>
+	 		</generator> -->
+	 		
+	 		<generator class="uuid"></generator>
+	 	</id>
+	 	<property name="age"></property>
+	 	<property name="username"></property>
+	 	<property name="password"></property>
+	 	
+	 	<!--  -->
+	 </class>
+	 
+	 
+	 
+	 
+   
+
+</hibernate-mapping>

@@ -74,11 +74,10 @@
 		<!-- 
 			多了一个key-type  键的类型
 		 -->
-		<property name="map">
+		<property name="map" >
 			<map>
-				<entry key="aaa" value="bbb"  />
-				<entry key="bbb" value="ccc"  />
-				<entry key="ddd" value="eee"  />
+				<entry key=111 value="bbb"  />
+				
 			</map>
 		</property>
 		

@@ -1,5 +1,7 @@
 package com.cdsxt.action;
 
+import javax.annotation.Resource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -9,7 +11,7 @@ import com.cdsxt.service.UsersService;
 @Controller("ua")
 public class UsersAction {
 
-	@Autowired
+	@Resource(name="b")
 	private UsersService usersService;
 	
 	public void save(){

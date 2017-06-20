@@ -1,0 +1,44 @@
+<!DOCTYPE hibernate-configuration PUBLIC
+	"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+	<session-factory>
+	
+		<!-- 
+			对数据库的链接配置
+			
+			对框架进行全局配置
+			
+			添加映射文件
+		
+		 -->
+	
+	
+		<!-- 
+			链接数据库配置
+			#hibernate.dialect org.hibernate.dialect.OracleDialect
+			#hibernate.connection.driver_class oracle.jdbc.driver.OracleDriver
+			#hibernate.connection.username ora
+			#hibernate.connection.password ora
+			#hibernate.connection.url jdbc:oracle:thin:@localhost:1521:orcl
+		-->
+		<property name="hibernate.dialect">org.hibernate.dialect.OracleDialect</property>
+		<property name="hibernate.connection.driver_class">oracle.jdbc.driver.OracleDriver</property>
+		<property name="hibernate.connection.username">scott</property>
+		<property name="hibernate.connection.password">123456</property>
+		<property name="hibernate.connection.url">jdbc:oracle:thin:@localhost:1521:orcl</property>
+		<!-- 
+		 	全局配置
+		-->
+		<property name="hibernate.show_sql">true</property>
+		<property name="hibernate.format_sql">true</property>
+		<!-- 在开发的时候用   在工作中 尽量少用 -->
+		<property name="hibernate.hbm2ddl.auto">update</property>
+		  
+		<!-- 
+		  	映射文件配置
+		-->
+		<mapping resource="com/cdsxt/po/Users.hbm.xml"/>
+		<mapping resource="com/cdsxt/po/Person.hbm.xml"/>
+	</session-factory>
+</hibernate-configuration>

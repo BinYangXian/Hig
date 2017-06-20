@@ -20,7 +20,7 @@
 		//注入ioc中已经存在的对象
 		@Autowired   先按照类型进行查找  如果没有 在根据当前被注解的属性的名称去查找  如果再没有  则报错
 		@Resource	  先按照名称去查找  如果没有 则按照类型查找  如果再没有  则报错
-	
+				|- @Resource(name="b")  当接口有多个实现类，用户可以通过名称指定实现类的注入例如：@Service("b")
 	  -->
 	<context:component-scan base-package="com.cdsxt"></context:component-scan>
 	<context:property-placeholder location="classpath:db.properties"/>

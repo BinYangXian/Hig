@@ -50,7 +50,7 @@ public class Student {
 		}
 	)
 	private Set<Teacher> teachers = new HashSet<>(0);
-	//一方  放弃关系维护
+	//"一"方  放弃关系维护
 	@OneToMany(mappedBy="student")
 	private Set<StudentCourse> studentCourses = new HashSet<>(0);
 

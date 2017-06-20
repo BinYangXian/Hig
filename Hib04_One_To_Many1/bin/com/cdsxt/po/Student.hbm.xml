@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping
+        SYSTEM
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.cdsxt.po">
+
+
+	 <class name="Student" table="test_student">
+	 
+	 	<id name="stuId" column="stu_id"><!-- 数据库中不区分大小写，所以起别名为stu_id -->
+	 		<generator class="sequence">
+	 			<param name="sequence">seq_test_student</param>
+	 		</generator>
+	 	</id>
+	 	<property name="stuName" column="stu_name"></property><!-- 数据库中不区分大小写，所以起别名为stu_name -->
+	 	<property name="score"></property>
+	 	<property name="age"></property>
+	 	<many-to-one name="info" class="ClassInfo" column="cid"></many-to-one><!-- info为当前类的属性名，
+	 	ClassInfo为该属性的类型，而对于表来讲，需要对应的是一个column（字段），所以在当前表中建立一个"cid"列，
+	 	而这个cid，就是与作为关联表的外键名（可以随便起，但一般使用中命名与ClassInfo的主键同名<-><key column="cid"></key>
+	 	因为关联表需要知道本表中的外键是谁，否则
+	 	需要额外配置），这样以后当前表就建立了一个外键“cid”关联到了ClassInfo对应的数据库表test_class_info-->
+	 </class>
+</hibernate-mapping>

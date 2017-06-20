@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping
+        SYSTEM
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.cdsxt.po">
+
+	<class name="Person" table="test_person">
+ 		<!-- 
+ 			主键生成器 
+ 			assigned  手动指定  在oracle中常用
+ 			
+ 			native  如果是有自增长的策略  则使用数据库自己的 自增长   如果没有该特性 则使用序列
+ 					MySQL  自增长
+ 					Oracle 序列(HIBERNATE_SEQUENCE)  不常用（所有的表都使用同一个序列）
+ 					
+ 			identity 自增长  在MySQL很常用   但是在Oracle中  不能用
+ 			
+ 			sequence  序列  在Oracle很常用  如果设置了hibernate.hbm2ddl.auto,  在数据库中没有的东西 都会帮我们创建
+ 			
+ 			uuid  全球唯一标识符  主要使用于分布式
+ 			
+ 			联合主键
+ 		-->
+ 		<composite-id name="name" class="PersonName">
+ 			<key-property name="firstName" column="first_name"></key-property>
+ 			<key-property name="lastName" column="last_name"></key-property>
+ 		</composite-id>
+ 		
+	 	<property name="age"></property>
+	 	
+	 	<!-- 
+	 		组件
+	 	 -->
+	 	 <component name="address" class="Address">
+	 	 	<property name="province"></property>
+	 	 	<property name="city"></property>
+	 	 	<property name="area"></property>
+	 	 </component>
+	 </class>
+	 
+	 
+	 
+	 
+   
+
+</hibernate-mapping>

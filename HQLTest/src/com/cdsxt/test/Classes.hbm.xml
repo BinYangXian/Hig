@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping
+        SYSTEM
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.cdsxt.po">
+    <class name="com.cdsxt.po.Classes" table="t_classes">  
+        <id name="id">  
+            <generator class="native"/>  
+        </id>  
+        <property name="name"/>  
+        <set name="students" inverse="true" cascade="save-update" lazyLoadingEnabled="false">  
+            <key column="classid"/>  
+            <one-to-many class="com.cdsxt.po.Student"/>  
+        </set>  
+    </class>  
+</hibernate-mapping>  

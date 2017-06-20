@@ -20,7 +20,7 @@ public class Course {
 	private Integer cid;
 	private String cname;
 	
-	//一方  放弃关系维护
+	//"一"方  放弃关系维护
 	@OneToMany(mappedBy="course")
 	private Set<StudentCourse> studentCourses = new HashSet<>(0);
 

@@ -19,7 +19,7 @@
     		</interceptor-stack>
     	</interceptors>
     	
-    	<default-interceptor-ref name="ttt"></default-interceptor-ref><!-- 3、在默认配置中声明该自定义拦截器栈 -->
+    	<default-interceptor-ref name="ttt"/><!-- 3、在默认配置中声明该自定义拦截器栈 -->
     	
 		<action name="index" class="com.cdsxt.action.IndexAction" method="index">
 			<!-- <interceptor-ref name="timer"></interceptor-ref> --> <!-- 内置拦截器的使用 -->

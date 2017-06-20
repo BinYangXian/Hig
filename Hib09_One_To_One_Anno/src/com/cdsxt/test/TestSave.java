@@ -1,8 +1,10 @@
 package com.cdsxt.test;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.junit.Test;
 
@@ -58,7 +60,7 @@ public class TestSave {
 		session.close();
 	}
 	
-	@Test
+/*	@Test
 	public void testSave1(){
 		Session session = HibUtil.getSession();
 	
@@ -79,7 +81,30 @@ public class TestSave {
 		
 		session.getTransaction().commit();
 		session.close();
-	}
+	}*/
+	@Test
+	public void findWifeByHus(){
+		Session session = HibUtil.getSession();
 	
-
+//		Husband husband = new Husband();
+//		husband.setHname("zhangsan");
+		Query query = session.createQuery("from Husband where hname=:name");
+		query.setString("name", "zhangsan");
+		List<Husband> list = query.list();
+		Husband husband = list.get(0);
+		System.out.println("********************"+husband.getWife().getWname());
+//		wife.setWname("lisi");
+//		
+//		husband.setWife(wife);
+//		wife.setHusband(husband);
+//		
+//		
+//		session.beginTransaction();
+//		
+//		session.save(husband);
+//		session.save(wife);
+//		
+//		session.getTransaction().commit();
+		session.close();
+	}
 }

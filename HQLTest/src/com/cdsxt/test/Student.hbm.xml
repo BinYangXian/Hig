@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping
+        SYSTEM
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.cdsxt.po">
+    <class name="com.cdsxt.po.Student" table="t_student">  
+        <id name="id">  
+            <generator class="native"/>  
+        </id>  
+        <property name="name"/>  
+        <property name="createTime"></property>  
+        <many-to-one name="classes" column="classid"></many-to-one>  
+    </class>  
+</hibernate-mapping>  

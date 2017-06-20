@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping
+        SYSTEM
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.cdsxt.po">
+
+
+	 <class name="ClassInfo" table="test_class_info">
+	 
+	 	<id name="cid">
+	 		<generator class="sequence">
+	 			<param name="sequence">seq_test_class_info</param>
+	 		</generator>
+	 	</id>
+	 	<property name="cname"></property>
+	 	<!-- <property name="cno" unique="true"></property> -->
+	 	
+	 	<!-- 配置集合 -->
+	 	<!-- <set name="students">
+	 		<key column="cno" property-ref="cno"></key>
+	 		<one-to-many class="Student"/>
+	 	</set> -->
+	 	
+	 	<!-- 
+	 	
+	 		cascade:
+	 			none   不级联  默认值
+	 			all    级联 所有都级联
+	 			save-update  保存和更新的时候  级联
+	 			delete  删除的时候  级联
+	 			all-delete-orphan   当对象失去宿主的时候 删除
+	 			
+	 	 -->
+ 	 	<!-- 配置集合：当得到set集合的时候，就会触发数据库联表查询student，通过cid的值，
+	 	查询对应班级的student（也就是查询关联表的条件），column="cid"是指使用"cid"作为外键，这里没有特殊
+	 	要求使用主键cid同时作为外键关联 -->
+	 	<set name="students" cascade="all-delete-orphan">
+	 		<key column="cid" ></key> <!-- 本表与关联表Student的建立连接所需本表的列 -->
+	 		<one-to-many class="Student"/><!-- Student为set容器中装的类 -->
+	 	</set>
+	 </class>
+</hibernate-mapping>

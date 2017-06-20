@@ -67,7 +67,7 @@
          <!-- 关闭abanded连接时输出错误日志 -->   
          <property name="logAbandoned" value="${logAbandoned}" />
 	</bean>  
-	
+	<!-- 声明式事务管理器 -->
 	<tx:advice id="txAdvice" transaction-manager="transactionManager">
 		<tx:attributes>
 			<tx:method name="delete*" propagation="REQUIRED" read-only="false" 
@@ -83,7 +83,7 @@
 	
 	<aop:aspectj-autoproxy proxy-target-class="true"/>
 	
-	<!-- 事物处理 -->
+	<!-- 事务管理器配置 -->
 	<aop:config>
 		<aop:pointcut id="pc" expression="execution(* com.fh.service..*(..))" />
 		<aop:advisor pointcut-ref="pc" advice-ref="txAdvice" />
